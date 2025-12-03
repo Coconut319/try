@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="See Synoriya automation in action with real call examples">
+    <title>Synoriya - Call Examples</title>
+
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://yourwebsite.com/call-demos/">
+    <meta property="og:title" content="Synoriya - Call Examples">
+    <meta property="og:description" content="See Synoriya automation in action with real call examples">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/call-demos/">
+    <meta property="og:image" content="https://yourwebsite.com/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="call-demos.css">
+    <link rel="stylesheet" href="../cookie-consent.css">
+</head>
+
+<body>
+    <!-- Skip to Content -->
+    <a href="#main-content" class="skip-link"
+        style="position: absolute; left: -9999px; z-index: 999; padding: 1em; background: var(--accent); color: var(--bg-primary); text-decoration: none; font-weight: 700;">Skip
+        to main content</a>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Synoriya</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/call-demos/" class="nav-link active" aria-current="page">Call Examples</a>
+        </div>
+    </nav>
+
+    <main id="main-content" role="main">
+
+        <div class="screen active">
+            <div class="container">
+                <!-- Header -->
+                <header class="header">
+                    <h1 class="headline" style="font-size: 48px;">See Synoriya in Action</h1>
+                    <p class="subheadline">Listen to real examples of AI handling calls for different business scenarios
+                    </p>
+                </header>
+
+                <!-- Tabs (Industry Categories) -->
+                <div class="industry-tabs" role="tablist" aria-label="Industry categories">
+                    <button class="industry-tab active" data-industry="lead-followup" role="tab" aria-selected="true"
+                        aria-controls="call-player-container" tabindex="0">
+                        Lead Follow-up
+                    </button>
+                    <button class="industry-tab" data-industry="appointment" role="tab" aria-selected="false"
+                        aria-controls="call-player-container" tabindex="-1">
+                        Appointment Booking
+                    </button>
+                    <button class="industry-tab" data-industry="support" role="tab" aria-selected="false"
+                        aria-controls="call-player-container" tabindex="-1">
+                        Customer Support
+                    </button>
+                    <button class="industry-tab" data-industry="sales" role="tab" aria-selected="false"
+                        aria-controls="call-player-container" tabindex="-1">
+                        Sales Qualification
+                    </button>
+                </div>
+
+                <!-- Call Demo Player -->
+                <div class="call-player-container" id="call-player-container" role="tabpanel">
+                    <!-- Audio Player -->
+                    <div class="audio-player-section">
+                        <audio controls class="audio-player" id="main-audio">
+                            <source src="../audio/lead-followup.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="demo-content">
+                        <div class="video-column">
+                            <div class="speaker-indicators">
+                                <div class="speaker-badge ai-badge active">
+                                    <span class="badge-icon">🤖</span>
+                                    <span class="badge-text">AI</span>
+                                </div>
+                                <div class="speaker-badge caller-badge">
+                                    <span class="badge-icon">📞</span>
+                                    <span class="badge-text">Caller</span>
+                                </div>
+                            </div>
+
+                            <!-- Video Player Placeholder -->
+                            <div class="video-container">
+                                <video class="call-video" id="call-video" poster="../videos/placeholder-poster.jpg">
+                                    <source src="../videos/lead-followup.mp4" type="video/mp4">
+                                    Your browser does not support the video element.
+                                </video>
+                                <div class="video-placeholder">
+                                    <div class="placeholder-icon">🎥</div>
+                                    <p class="placeholder-text">Video will be added here</p>
+                                    <p class="placeholder-subtext">Upload your call recording video</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section">
+                    <h2 class="cta-title">Ready to Automate Your Calls?</h2>
+                    <p class="cta-text">See how Synoriya can handle your calls 24/7, book appointments, and never
+                        miss a lead.</p>
+                    <a href="/quiz.html" class="cta-button">Start Your Quiz</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        style="background: linear-gradient(135deg, #1a0a2e 0%, #0a0a0a 100%); border-top: 2px solid rgba(168, 85, 247, 0.3); box-shadow: 0 -4px 20px rgba(168, 85, 247, 0.1); padding: var(--space-lg) var(--space-md); margin-top: var(--space-2xl); text-align: center;"
+        role="contentinfo">
+        <p style="color: var(--text-muted); font-size: var(--font-small); margin-bottom: var(--space-sm);">
+            © 2025 Synoriya. All rights reserved.
+        </p>
+        <nav aria-label="Legal navigation"
+            style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+            <a href="/privacy/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Privacy
+                Policy</a>
+            <a href="/terms/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Terms
+                of Service</a>
+            <a href="/impressum/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Imprint
+                (EU)</a>
+        </nav>
+    </footer>
+
+    <!-- Essential Scripts -->
+    <script src="call-demos.js"></script>
+    <script src="../cookie-consent.js"></script>
+
+    <!-- No Script Fallback -->
+    <noscript>
+        <div
+            style="position: fixed; top: 0; left: 0; right: 0; background: #ff6b6b; color: white; padding: 1em; text-align: center; z-index: 9999;">
+            This website requires JavaScript for full functionality.
+        </div>
+    </noscript>
+</body>
+
+</html>

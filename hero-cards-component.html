@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Cards Component Test</title>
+    <style>
+        /* Container for the component - simulates the Hero section placement */
+        .hero-cards-wrapper {
+            width: 100%;
+            height: 300px;
+            /* Fixed height for the animation strip */
+            background: #000;
+            /* Dark background to match site */
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        /* --- ADAPTED CSS FROM CODEPEN --- */
+        @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap");
+
+        .hero-cards-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* Ensure no scrollbars */
+        }
+
+        .card-stream {
+            position: absolute;
+            width: 100%;
+            /* Use 100% of container, not vw */
+            height: 180px;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+            left: 0;
+            /* Align to left of container */
+        }
+
+        .card-line {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            white-space: nowrap;
+            cursor: grab;
+            user-select: none;
+            will-change: transform;
+            /* Initial animation */
+            animation: scrollCards 40s linear infinite;
+        }
+
+        .card-line:active {
+            cursor: grabbing;
+        }
+
+        .card-line.dragging {
+            cursor: grabbing;
+        }
+
+        @keyframes scrollCards {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+
+            /* Scroll half way if duplicated, or adjust logic */
+        }
+
+        /* Card Styles - Kept mostly same */
+        .card-wrapper {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            flex-shrink: 0;
+        }
+
+        .card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-normal {
+            background: transparent;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+            color: white;
+            z-index: 2;
+            position: relative;
+            overflow: hidden;
+            clip-path: inset(0 0 0 var(--clip-right, 0%));
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            filter: brightness(1.1) contrast(1.1);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-ascii {
+            background: transparent;
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            clip-path: inset(0 calc(100% - var(--clip-left, 0%)) 0 0);
+        }
+
+        .ascii-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: rgba(220, 210, 255, 0.6);
+            font-family: "Courier New", monospace;
+            font-size: 11px;
+            line-height: 13px;
+            overflow: hidden;
+            white-space: pre;
+            animation: glitch 0.1s infinite linear alternate-reverse;
+            text-align: left;
+            -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 100%);
+            mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 100%);
+        }
+
+        @keyframes glitch {
+            0% {
+                opacity: 1;
+            }
+
+            15% {
+                opacity: 0.9;
+            }
+
+            16% {
+                opacity: 1;
+            }
+
+            49% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            99% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Scanner Line */
+        .scanner {
+            display: none;
+            /* Hidden by default logic, but used in JS */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 300px;
+            border-radius: 30px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 1), rgba(0, 255, 255, 0.8), transparent);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .scan-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+            animation: scanEffect 0.6s ease-out;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes scanEffect {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Canvas Positioning */
+        #particleCanvas,
+        #scannerCanvas {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #particleCanvas {
+            z-index: 0;
+        }
+
+        #scannerCanvas {
+            z-index: 15;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- This wrapper represents the Hero Section area where we put the component -->
+    <div class="hero-cards-wrapper" id="heroCardsComponent">
+        <div class="hero-cards-container">
+            <canvas id="particleCanvas"></canvas>
+            <canvas id="scannerCanvas"></canvas>
+
+            <div class="scanner"></div>
+
+            <div class="card-stream" id="cardStream">
+                <div class="card-line" id="cardLine"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Dependency -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Adapted Script -->
+    <script>
+        // --- ADAPTED JS ---
+        // Scoped to the container instead of window where possible
+
+        const codeChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(){}[]<>;:,._-+=!@#$%^&*|\\/\"'`~?";
+
+        // We need to get the container dimensions dynamically
+        const getContainerWidth = () => document.querySelector('.hero-cards-wrapper').clientWidth;
+        const getContainerHeight = () => document.querySelector('.hero-cards-wrapper').clientHeight;
+
+        class CardStreamController {
+            constructor() {
+                this.container = document.getElementById("cardStream");
+                this.cardLine = document.getElementById("cardLine");
+                // Removed speedIndicator
+
+                this.position = 0;
+                this.velocity = 60; // Slower default speed for hero
+                this.direction = -1;
+                this.isAnimating = true;
+                this.isDragging = false;
+
+                this.lastTime = 0;
+                this.lastMouseX = 0;
+                this.mouseVelocity = 0;
+                this.friction = 0.95;
+                this.minVelocity = 30;
+
+                this.containerWidth = 0;
+                this.cardLineWidth = 0;
+
+                this.init();
+            }
+
+            init() {
+                this.populateCardLine();
+                this.calculateDimensions();
+                this.setupEventListeners();
+                this.updateCardPosition();
+                this.animate();
+                this.startPeriodicUpdates();
+            }
+
+            calculateDimensions() {
+                this.containerWidth = getContainerWidth(); // Use container width
+                const cardWidth = 400;
+                const cardGap = 60;
+                const cardCount = this.cardLine.children.length;
+                this.cardLineWidth = (cardWidth + cardGap) * cardCount;
+            }
+
+            setupEventListeners() {
+                this.cardLine.addEventListener("mousedown", (e) => this.startDrag(e));
+                document.addEventListener("mousemove", (e) => this.onDrag(e));
+                document.addEventListener("mouseup", () => this.endDrag());
+
+                // Touch events...
+                this.cardLine.addEventListener("touchstart", (e) => this.startDrag(e.touches[0]), { passive: false });
+                document.addEventListener("touchmove", (e) => this.onDrag(e.touches[0]), { passive: false });
+                document.addEventListener("touchend", () => this.endDrag());
+
+                window.addEventListener("resize", () => this.calculateDimensions());
+            }
+
+            startDrag(e) {
+                e.preventDefault();
+                this.isDragging = true;
+                this.isAnimating = false;
+                this.lastMouseX = e.clientX;
+                this.mouseVelocity = 0;
+
+                // Stop CSS animation if running
+                this.cardLine.style.animation = "none";
+                this.cardLine.classList.add("dragging");
+            }
+
+            onDrag(e) {
+                if (!this.isDragging) return;
+                e.preventDefault();
+                const deltaX = e.clientX - this.lastMouseX;
+                this.position += deltaX;
+                this.mouseVelocity = deltaX * 60;
+                this.lastMouseX = e.clientX;
+                this.cardLine.style.transform = `translateX(${this.position}px)`;
+                this.updateCardClipping();
+            }
+
+            endDrag() {
+                if (!this.isDragging) return;
+                this.isDragging = false;
+                this.cardLine.classList.remove("dragging");
+                if (Math.abs(this.mouseVelocity) > this.minVelocity) {
+                    this.velocity = Math.abs(this.mouseVelocity);
+                    this.direction = this.mouseVelocity > 0 ? 1 : -1;
+                } else {
+                    this.velocity = 60;
+                }
+                this.isAnimating = true;
+            }
+
+            animate() {
+                const currentTime = performance.now();
+                const deltaTime = (currentTime - this.lastTime) / 1000;
+                this.lastTime = currentTime;
+
+                if (this.isAnimating && !this.isDragging) {
+                    if (this.velocity > this.minVelocity) {
+                        this.velocity *= this.friction;
+                    } else {
+                        this.velocity = Math.max(this.minVelocity, this.velocity);
+                    }
+                    this.position += this.velocity * this.direction * deltaTime;
+                    this.updateCardPosition();
+                }
+                requestAnimationFrame(() => this.animate());
+            }
+
+            updateCardPosition() {
+                // Infinite scroll logic
+                if (this.position < -this.cardLineWidth) {
+                    this.position = this.containerWidth;
+                } else if (this.position > this.containerWidth) {
+                    this.position = -this.cardLineWidth;
+                }
+                this.cardLine.style.transform = `translateX(${this.position}px)`;
+                this.updateCardClipping();
+            }
+
+            // ... generateCode, calculateCodeDimensions, createCardWrapper ...
+            // (Keeping these mostly same but ensuring images load)
+
+            generateCode(width, height) {
+                // Simplified for brevity in this component test
+                let out = "";
+                const chars = "01";
+                for (let i = 0; i < height; i++) {
+                    for (let j = 0; j < width; j++) {
+                        out += chars[Math.floor(Math.random() * chars.length)];
+                    }
+                    out += "\n";
+                }
+                return out;
+            }
+
+            calculateCodeDimensions(cardWidth, cardHeight) {
+                return { width: 40, height: 20, fontSize: 11, lineHeight: 13 };
+            }
+
+            createCardWrapper(index) {
+                const wrapper = document.createElement("div");
+                wrapper.className = "card-wrapper";
+                const normalCard = document.createElement("div");
+                normalCard.className = "card card-normal";
+
+                // Use placeholders or local images
+                const cardImage = document.createElement("img");
+                cardImage.className = "card-image";
+                // Using a placeholder service for demo
+                cardImage.src = `https://placehold.co/400x250/161b22/b4ff39?text=Card+${index + 1}`;
+                normalCard.appendChild(cardImage);
+
+                const asciiCard = document.createElement("div");
+                asciiCard.className = "card card-ascii";
+                const asciiContent = document.createElement("div");
+                asciiContent.className = "ascii-content";
+                asciiContent.textContent = this.generateCode(40, 20);
+                asciiCard.appendChild(asciiContent);
+
+                wrapper.appendChild(normalCard);
+                wrapper.appendChild(asciiCard);
+                return wrapper;
+            }
+
+            updateCardClipping() {
+                const containerW = getContainerWidth();
+                const scannerX = containerW / 2; // Center of container
+                const scannerWidth = 8;
+                const scannerLeft = scannerX - scannerWidth / 2;
+                const scannerRight = scannerX + scannerWidth / 2;
+                let anyScanningActive = false;
+
+                // We need to account for the container's offset relative to viewport if using getBoundingClientRect
+                // But since cardLine is inside container, we can calculate relative positions
+
+                const containerRect = document.querySelector('.hero-cards-wrapper').getBoundingClientRect();
+                const scannerLeftAbs = containerRect.left + scannerLeft;
+                const scannerRightAbs = containerRect.left + scannerRight;
+
+                document.querySelectorAll(".card-wrapper").forEach((wrapper) => {
+                    const rect = wrapper.getBoundingClientRect();
+                    const cardLeft = rect.left;
+                    const cardRight = rect.right;
+                    const cardWidth = rect.width;
+
+                    const normalCard = wrapper.querySelector(".card-normal");
+                    const asciiCard = wrapper.querySelector(".card-ascii");
+
+                    if (cardLeft < scannerRightAbs && cardRight > scannerLeftAbs) {
+                        anyScanningActive = true;
+                        const scannerIntersectLeft = Math.max(scannerLeftAbs - cardLeft, 0);
+
+                        const normalClipRight = (scannerIntersectLeft / cardWidth) * 100;
+                        const asciiClipLeft = (scannerIntersectLeft / cardWidth) * 100; // Simplified logic
+
+                        normalCard.style.setProperty("--clip-right", `${normalClipRight}%`);
+                        asciiCard.style.setProperty("--clip-left", `${asciiClipLeft}%`);
+
+                        // Scan effect div logic...
+                        if (!wrapper.hasAttribute("data-scanned") && scannerIntersectLeft > 0) {
+                            wrapper.setAttribute("data-scanned", "true");
+                            const scanEffect = document.createElement("div");
+                            scanEffect.className = "scan-effect";
+                            wrapper.appendChild(scanEffect);
+                            setTimeout(() => scanEffect.remove(), 600);
+                        }
+
+                    } else {
+                        if (cardRight < scannerLeftAbs) {
+                            normalCard.style.setProperty("--clip-right", "100%");
+                            asciiCard.style.setProperty("--clip-left", "100%");
+                        } else if (cardLeft > scannerRightAbs) {
+                            normalCard.style.setProperty("--clip-right", "0%");
+                            asciiCard.style.setProperty("--clip-left", "0%");
+                        }
+                        wrapper.removeAttribute("data-scanned");
+                    }
+                });
+
+                if (window.setScannerScanning) window.setScannerScanning(anyScanningActive);
+            }
+
+            updateAsciiContent() {
+                document.querySelectorAll(".ascii-content").forEach((content) => {
+                    if (Math.random() < 0.15) {
+                        content.textContent = this.generateCode(40, 20);
+                    }
+                });
+            }
+
+            populateCardLine() {
+                this.cardLine.innerHTML = "";
+                for (let i = 0; i < 10; i++) { // Reduced count for performance
+                    this.cardLine.appendChild(this.createCardWrapper(i));
+                }
+            }
+
+            startPeriodicUpdates() {
+                setInterval(() => this.updateAsciiContent(), 200);
+                const updateClipping = () => {
+                    this.updateCardClipping();
+                    requestAnimationFrame(updateClipping);
+                };
+                updateClipping();
+            }
+        }
+
+        // --- PARTICLE SYSTEM ADAPTED ---
+        class ParticleSystem {
+            constructor() {
+                this.canvas = document.getElementById("particleCanvas");
+                this.init();
+            }
+
+            init() {
+                this.scene = new THREE.Scene();
+                const w = getContainerWidth();
+                const h = getContainerHeight();
+
+                this.camera = new THREE.OrthographicCamera(-w / 2, w / 2, h / 2, -h / 2, 1, 1000);
+                this.camera.position.z = 100;
+
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, alpha: true, antialias: true });
+                this.renderer.setSize(w, h);
+                this.renderer.setClearColor(0x000000, 0);
+
+                this.createParticles();
+                this.animate();
+                window.addEventListener("resize", () => this.onWindowResize());
+            }
+
+            createParticles() {
+                // Simplified particle creation
+                const count = 200;
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(count * 3);
+                const colors = new Float32Array(count * 3);
+                const sizes = new Float32Array(count);
+
+                const w = getContainerWidth();
+                const h = getContainerHeight();
+
+                for (let i = 0; i < count; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * w * 2;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * h;
+                    positions[i * 3 + 2] = 0;
+                    colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1;
+                    sizes[i] = Math.random() * 5;
+                }
+                geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+                geometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+
+                const material = new THREE.PointsMaterial({ size: 2, color: 0xffffff, transparent: true, opacity: 0.5 });
+                this.particles = new THREE.Points(geometry, material);
+                this.scene.add(this.particles);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                if (this.particles) {
+                    const positions = this.particles.geometry.attributes.position.array;
+                    for (let i = 0; i < 200; i++) {
+                        positions[i * 3] += 0.5; // Move right
+                        if (positions[i * 3] > getContainerWidth() / 2) positions[i * 3] = -getContainerWidth() / 2;
+                    }
+                    this.particles.geometry.attributes.position.needsUpdate = true;
+                }
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            onWindowResize() {
+                const w = getContainerWidth();
+                const h = getContainerHeight();
+                this.camera.left = -w / 2;
+                this.camera.right = w / 2;
+                this.camera.top = h / 2;
+                this.camera.bottom = -h / 2;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(w, h);
+            }
+        }
+
+        // --- PARTICLE SCANNER ADAPTED ---
+        class ParticleScanner {
+            constructor() {
+                this.canvas = document.getElementById("scannerCanvas");
+                this.ctx = this.canvas.getContext("2d");
+                this.w = getContainerWidth();
+                this.h = getContainerHeight();
+                this.setupCanvas();
+                this.animate();
+                window.addEventListener("resize", () => this.onResize());
+            }
+
+            setupCanvas() {
+                this.w = getContainerWidth();
+                this.h = getContainerHeight();
+                this.canvas.width = this.w;
+                this.canvas.height = this.h;
+            }
+
+            onResize() {
+                this.setupCanvas();
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                this.ctx.clearRect(0, 0, this.w, this.h);
+
+                // Draw simple scanner line
+                const centerX = this.w / 2;
+                this.ctx.strokeStyle = "rgba(0, 255, 255, 0.5)";
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(centerX, 0);
+                this.ctx.lineTo(centerX, this.h);
+                this.ctx.stroke();
+
+                // Add glow
+                const gradient = this.ctx.createLinearGradient(centerX - 50, 0, centerX + 50, 0);
+                gradient.addColorStop(0, "transparent");
+                gradient.addColorStop(0.5, "rgba(0, 255, 255, 0.2)");
+                gradient.addColorStop(1, "transparent");
+                this.ctx.fillStyle = gradient;
+                this.ctx.fillRect(centerX - 50, 0, 100, this.h);
+            }
+
+            setScanningActive(active) {
+                // Simplified: just log or change color intensity
+            }
+        }
+
+        // Initialize
+        document.addEventListener("DOMContentLoaded", () => {
+            new CardStreamController();
+            new ParticleSystem();
+            new ParticleScanner();
+        });
+
+    </script>
+</body>
+
+</html>

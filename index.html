@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Automate your business with Synoriya. Book a free 30-minute consultation to discover how automation can 10x your leads.">
+    <title>Synoriya - 10x Your Leads</title>
+
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://yourwebsite.com/">
+    <meta property="og:title" content="Synoriya - 10x Your Leads">
+    <meta property="og:description"
+        content="Automate your business with Synoriya. Book a free 30-minute consultation to discover how automation can 10x your leads.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/">
+    <meta property="og:image" content="https://yourwebsite.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Synoriya - 10x Your Leads">
+    <meta name="twitter:description"
+        content="Automate your business with Synoriya. Book a free 30-minute consultation.">
+    <meta name="twitter:image" content="https://yourwebsite.com/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Fonts with Preload -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+        as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cookie-consent.css">
+    <link rel="stylesheet" href="hero-fullwidth.css">
+    <!-- Removed hero-animation.css as we are using iframe now -->
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Synoriya",
+      "url": "https://yourwebsite.com",
+      "description": "Professional automation services to 10x your leads"
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#main-content" class="skip-link"
+        style="position: absolute; left: -9999px; z-index: 999; padding: 1em; background: var(--accent); color: var(--bg-primary); text-decoration: none; font-weight: 700;">Skip
+        to main content</a>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Synoriya</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link active" aria-current="page">Home</a>
+            <a href="/call-demos/" class="nav-link">Call Examples</a>
+        </div>
+    </nav>
+
+    <!-- Landing Screen -->
+    <main id="main-content" role="main">
+        <div id="landing-screen" class="screen active">
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <!-- Hero Card Animation (Iframe for perfect fidelity) -->
+                    <div class="hero-cards-wrapper"
+                        style="height: 300px; width: 100%; overflow: hidden; border-radius: 12px; margin-bottom: 40px; position: relative;">
+                        <iframe src="hero-cards-iframe.html"
+                            style="width: 100%; height: 100%; border: none; pointer-events: auto;"
+                            title="Card Beam Animation" scrolling="no">
+                        </iframe>
+                    </div>
+
+                    <h1 class="headline">
+                        Automate Your Business &<br>
+                        <span class="highlight">10x Your Leads</span> with Synoriya
+                    </h1>
+                    <p class="subheadline">Take the quiz. Discover how automation can transform your business in 10
+                        minutes
+                    </p>
+                    <button class="cta-button" id="get-started-btn" aria-label="Start the automation quiz">Get
+                        started</button>
+
+
+                </section>
+
+                <!-- Social Proof Section -->
+                <section class="social-proof">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="testimonial-author">
+                                <div class="author-avatar">SM</div>
+                                <div class="author-info">
+                                    <p class="author-name">Sarah M.</p>
+                                    <p class="author-title">Agency Owner</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-quote">"Increased my conversion rate by 300% in just 2 months!"</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-badges">
+                        <div class="badge">
+                            <div class="badge-icon">👥</div>
+                            <div class="badge-content">
+                                <p class="badge-number">500+</p>
+                                <p class="badge-label">businesses automated</p>
+                            </div>
+                        </div>
+
+                        <div class="badge">
+                            <div class="badge-icon">⭐</div>
+                            <div class="badge-content">
+                                <p class="badge-number">4.9</p>
+                                <p class="badge-label">on Google Reviews</p>
+                            </div>
+                        </div>
+
+                        <div class="badge guarantee">
+                            <div class="badge-icon">✓</div>
+                            <div class="badge-content">
+                                <p class="badge-highlight">Free consultation</p>
+                                <p class="badge-label">No commitment</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="container">
+                <!-- Progress Indicator -->
+                <div class="progress-indicator" role="progressbar" aria-label="Quiz progress" aria-valuenow="0"
+                    aria-valuemin="0" aria-valuemax="5">
+                    <div class="progress-dot active" data-step="0"></div>
+                    <div class="progress-dot" data-step="1"></div>
+                    <div class="progress-dot" data-step="2"></div>
+                    <div class="progress-dot" data-step="3"></div>
+                    <div class="progress-dot" data-step="4"></div>
+                </div>
+
+                <!-- Quiz Content -->
+                <div class="quiz-content">
+                    <h2 class="quiz-intro">Let's create a personalized automation strategy for YOUR business!</h2>
+                    <div id="question-container" role="region" aria-live="polite" aria-atomic="true">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Screen -->
+        <div id="booking-screen" class="screen">
+            <div class="container">
+                <div class="booking-content">
+                    <div class="success-icon">🚀</div>
+                    <h2 class="booking-headline">Perfect! Let's Get You Automated</h2>
+                    <p class="booking-subheadline">Based on your answers, I can show you exactly how to <span
+                            class="highlight" id="personalized-benefit">transform your business</span> with Synoriya
+                        automation.
+                    </p>
+
+                    <div class="booking-benefits">
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>30-minute personalized demo</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>Custom automation strategy for your business</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>See real examples & results</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>No commitment required</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-cta">
+                        <p class="booking-prompt">Book your free Zoom call now:</p>
+                        <!-- Calendly inline widget begin -->
+                        <div id="booking-embed">
+                            <div class="calendly-inline-widget" data-url="https://calendly.com/abdelalissa78/30min"
+                                style="min-width:320px;height:700px;">
+                            </div>
+                            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
+                                async>
+                                </script>
+                        </div>
+                        <!-- Calendly inline widget end -->
+                    </div>
+
+                    <p class="booking-footer">We respect your time. No sales pitch, just value.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        style="background: linear-gradient(135deg, #1a0a2e 0%, #0a0a0a 100%); border-top: 2px solid rgba(168, 85, 247, 0.3); box-shadow: 0 -4px 20px rgba(168, 85, 247, 0.1); padding: var(--space-lg) var(--space-md); margin-top: var(--space-2xl); text-align: center;"
+        role="contentinfo">
+        <p style="color: var(--text-muted); font-size: var(--font-small); margin-bottom: var(--space-sm);">
+            © 2025 Synoriya. All rights reserved.
+        </p>
+        <nav aria-label="Legal navigation"
+            style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+            <a href="/privacy/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Privacy
+                Policy</a>
+            <a href="/terms/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Terms
+                of Service</a>
+            <a href="/impressum/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: var(--font-small);">Imprint
+                (EU)</a>
+        </nav>
+    </footer>
+
+    <!-- Essential Scripts -->
+    <script src="script.js"></script>
+    <script src="cookie-consent.js"></script>
+
+    <!-- No Script Fallback -->
+    <noscript>
+        <div
+            style="position: fixed; top: 0; left: 0; right: 0; background: #ff6b6b; color: white; padding: 1em; text-align: center; z-index: 9999;">
+            This website requires JavaScript for full functionality. Please enable JavaScript in
+            your browser settings.
+        </div>
+    </noscript>
+</body>
+
+</html>

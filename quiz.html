@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synoriya - Start Your Quiz</title>
+
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://yourwebsite.com/quiz">
+    <meta property="og:title" content="Synoriya - Start Your Quiz">
+    <meta property="og:description" content="Take our quiz to see how Synoriya can transform your business">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/quiz">
+    <meta property="og:image" content="https://yourwebsite.com/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cookie-consent.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Synoriya</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/call-demos/" class="nav-link">Call Examples</a>
+        </div>
+    </nav>
+
+    <main id="main-content" role="main">
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen active">
+            <div class="container">
+                <!-- Progress Indicator -->
+                <div class="progress-indicator" role="progressbar" aria-label="Quiz progress" aria-valuenow="0"
+                    aria-valuemin="0" aria-valuemax="5">
+                    <div class="progress-dot active" data-step="0"></div>
+                    <div class="progress-dot" data-step="1"></div>
+                    <div class="progress-dot" data-step="2"></div>
+                    <div class="progress-dot" data-step="3"></div>
+                    <div class="progress-dot" data-step="4"></div>
+                </div>
+
+                <!-- Quiz Content -->
+                <div class="quiz-content">
+                    <h2 class="quiz-intro">Let's create a personalized automation strategy for YOUR business!</h2>
+                    <div id="question-container" role="region" aria-live="polite" aria-atomic="true">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Screen -->
+        <div id="booking-screen" class="screen">
+            <div class="container">
+                <div class="booking-content">
+                    <div class="success-icon">🚀</div>
+                    <h2 class="booking-headline">Perfect! Let's Get You Automated</h2>
+                    <p class="booking-subheadline">Based on your answers, I can show you exactly how to <span
+                            class="highlight" id="personalized-benefit">transform your business</span> with Synoriya
+                        automation.
+                    </p>
+
+                    <div class="booking-benefits">
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>30-minute personalized demo</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>Custom automation strategy for your business</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>See real examples & results</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="check-icon">✓</span>
+                            <span>No commitment required</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-cta">
+                        <p class="booking-prompt">Book your free Zoom call now:</p>
+                        <!-- Calendly inline widget begin -->
+                        <div id="booking-embed">
+                            <div class="calendly-inline-widget" data-url="https://calendly.com/abdelalissa78/30min"
+                                style="min-width:320px;height:700px;">
+                            </div>
+                            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
+                                async>
+                                </script>
+                        </div>
+                        <!-- Calendly inline widget end -->
+                    </div>
+
+                    <p class="booking-footer">We respect your time. No sales pitch, just value.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        style="background: linear-gradient(135deg, #1a0a2e 0%, #0a0a0a 100%); border-top: 2px solid rgba(168, 85, 247, 0.3); box-shadow: 0 -4px 20px rgba(168, 85, 247, 0.1); padding: 2rem 1.5rem; margin-top: 4rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.75rem;">
+            © 2025 Synoriya. All rights reserved.
+        </p>
+        <nav aria-label="Legal navigation" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/privacy/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Privacy Policy</a>
+            <a href="/terms/" style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Terms of
+                Service</a>
+            <a href="/impressum/"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Imprint (EU)</a>
+        </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // ============================================
+        // QUIZ APP STATE MANAGEMENT
+        // ============================================
+
+        const appState = {
+            currentPage: 'quiz',
+            currentQuestion: 0,
+            answers: {},
+            quizData: [
+                {
+                    id: 'business-type',
+                    question: 'First, what type of business do you run?',
+                    options: [
+                        { value: 'ecommerce', label: 'E-commerce / Online Store' },
+                        { value: 'service', label: 'Service-Based Business' },
+                        { value: 'coaching', label: 'Coaching / Consulting' },
+                        { value: 'agency', label: 'Marketing / Creative Agency' },
+                        { value: 'other', label: 'Other' }
+                    ]
+                },
+                {
+                    id: 'lead-volume',
+                    question: 'How many leads do you generate per month?',
+                    options: [
+                        { value: 'low', label: 'Less than 50 leads' },
+                        { value: 'medium', label: '50-200 leads' },
+                        { value: 'high', label: '200-500 leads' },
+                        { value: 'very-high', label: '500+ leads' }
+                    ]
+                },
+                {
+                    id: 'challenge',
+                    question: 'What\'s your biggest challenge right now?',
+                    options: [
+                        { value: 'lead-gen', label: 'Generating enough leads' },
+                        { value: 'follow-up', label: 'Following up with leads consistently' },
+                        { value: 'conversion', label: 'Converting leads into customers' },
+                        { value: 'time', label: 'Not enough time for everything' }
+                    ]
+                },
+                {
+                    id: 'crm-usage',
+                    question: 'Do you currently use a CRM?',
+                    options: [
+                        { value: 'none', label: 'No CRM - I use spreadsheets or notes' },
+                        { value: 'basic', label: 'Yes, a basic CRM' },
+                        { value: 'advanced', label: 'Yes, an advanced CRM (like Synoriya)' },
+                        { value: 'switching', label: 'Looking to switch CRMs' }
+                    ]
+                },
+                {
+                    id: 'revenue-goal',
+                    question: 'What\'s your monthly revenue goal?',
+                    options: [
+                        { value: 'starter', label: 'Under $10K/month' },
+                        { value: 'growing', label: '$10K - $50K/month' },
+                        { value: 'scaling', label: '$50K - $100K/month' },
+                        { value: 'enterprise', label: '$100K+/month' }
+                    ]
+                }
+            ]
+        };
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+
+        const elements = {
+            questionContainer: document.getElementById('question-container'),
+            progressDots: document.querySelectorAll('.progress-dot'),
+            personalizedBenefit: document.getElementById('personalized-benefit')
+        };
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Synoriya Quiz Page loaded! 🚀');
+
+            // Initialize the quiz
+            renderQuestion(0);
+            updateProgress(0);
+            addKeyboardSupport();
+
+            // Track the page view
+            trackEvent('quiz_page_view');
+        });
+
+        // ============================================
+        // KEYBOARD NAVIGATION
+        // ============================================
+
+        function addKeyboardSupport() {
+            document.addEventListener('keydown', (e) => {
+                const activeElement = document.activeElement;
+                if (activeElement.classList.contains('option-card') && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    activeElement.click();
+                }
+            });
+        }
+
+        // ============================================
+        // ANALYTICS TRACKING (WITH CONSENT CHECK)
+        // ============================================
+
+        function trackEvent(eventName, eventParams = {}) {
+            // Only track if user has given consent
+            if (window.CookieConsent && window.CookieConsent.hasConsent('analytics')) {
+                if (typeof gtag === 'function') {
+                    gtag('event', eventName, eventParams);
+                }
+            }
+            console.log('Event:', eventName, eventParams);
+        }
+
+        // ============================================
+        // QUIZ FUNCTIONALITY
+        // ============================================
+
+        function renderQuestion(index) {
+            const question = appState.quizData[index];
+
+            const questionHTML = `
+                <div class="question">
+                    <h3 class="question-text">${question.question}</h3>
+                    <div class="options">
+                        ${question.options.map(option => `
+                            <div class="option-card" data-value="${option.value}" tabindex="0" role="button" aria-label="${option.label}">
+                                ${option.label}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            elements.questionContainer.innerHTML = questionHTML;
+
+            // Add event listeners to options
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', () => handleOptionClick(card, question.id));
+            });
+        }
+
+        function handleOptionClick(card, questionId) {
+            // Remove selected state from all options
+            document.querySelectorAll('.option-card').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.setAttribute('aria-selected', 'false');
+            });
+
+            // Set selected state
+            card.classList.add('selected');
+            card.setAttribute('aria-selected', 'true');
+
+            // Store the answer
+            const value = card.dataset.value;
+            appState.answers[questionId] = value;
+
+            // Move to next question or show results
+            setTimeout(() => {
+                if (appState.currentQuestion < appState.quizData.length - 1) {
+                    appState.currentQuestion++;
+                    renderQuestion(appState.currentQuestion);
+                    updateProgress(appState.currentQuestion);
+                } else {
+                    showBookingScreen();
+                }
+            }, 300);
+        }
+
+        function updateProgress(index) {
+            // Update active dot
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                if (i <= index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // ============================================
+        // BOOKING SCREEN
+        // ============================================
+
+        function showBookingScreen() {
+            // Hide quiz screen and show booking screen
+            document.getElementById('quiz-screen').classList.remove('active');
+            document.getElementById('booking-screen').classList.add('active');
+
+            // Personalize the booking screen based on answers
+            personalizeBookingScreen();
+
+            // Load Calendly
+            loadCalendly();
+
+            // Track completion
+            trackEvent('quiz_completed', appState.answers);
+        }
+
+        function personalizeBookingScreen() {
+            // Add personalization based on answers if needed
+            // For example, you can update the #personalized-benefit element
+            const benefitText = "transform your business";
+            if (elements.personalizedBenefit) {
+                elements.personalizedBenefit.textContent = benefitText;
+            }
+        }
+
+        // ============================================
+        // CALENDLY INTEGRATION
+        // ============================================
+
+        function loadCalendly() {
+            // Check if Calendly is already loaded
+            if (window.Calendly) {
+                initCalendly();
+                return;
+            }
+
+            // Load Calendly script
+            const script = document.createElement('script');
+            script.src = 'https://assets.calendly.com/assets/external/widget.js';
+            script.async = true;
+            script.onload = initCalendly;
+            document.body.appendChild(script);
+        }
+
+        function initCalendly() {
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initInlineWidget({
+                    url: 'https://calendly.com/abdelalissa78/30min',
+                    parentElement: document.getElementById('booking-embed'),
+                    prefill: {},
+                    utm: {}
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

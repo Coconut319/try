@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Service Cards</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+        }
+
+        canvas {
+            margin: 10px;
+            border: 1px solid #a855f7;
+        }
+
+        button {
+            background: #a855f7;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        button:hover {
+            background: #9333ea;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Service Cards Generator</h1>
+    <p>Click the button below to generate and download all 4 service cards:</p>
+    <button onclick="generateAllCards()">Generate & Download Cards</button>
+    <div id="canvas-container"></div>
+
+    <script>
+        const services = [
+            ["CRM Automation", "Lead Routing", "AI Email Replies"],
+            ["Zapier Workflows", "API Integrations", "Data Sync"],
+            ["Auto-Reporting", "Funnel Automation", "Calendar Automation"],
+            ["Client Onboarding", "Notion Systems", "Airtable Dashboards"]
+        ];
+
+        function createServiceCard(serviceList, index) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 250;
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 400, 250);
+            gradient.addColorStop(0, '#1a0a2e');
+            gradient.addColorStop(0.5, '#0a0a0a');
+            gradient.addColorStop(1, '#000000');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 250);
+
+            // Purple glow overlay
+            const glowGradient = ctx.createRadialGradient(200, 125, 50, 200, 125, 200);
+            glowGradient.addColorStop(0, 'rgba(168, 85, 247, 0.2)');
+            glowGradient.addColorStop(1, 'rgba(168, 85, 247, 0)');
+            ctx.fillStyle = glowGradient;
+            ctx.fillRect(0, 0, 400, 250);
+
+            // Border
+            ctx.strokeStyle = 'rgba(168, 85, 247, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(0, 0, 400, 250);
+
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Inter, Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Services', 200, 40);
+
+            // Decorative line
+            ctx.strokeStyle = '#a855f7';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(120, 55);
+            ctx.lineTo(280, 55);
+            ctx.stroke();
+
+            // Services list
+            ctx.font = '18px Inter, Arial, sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'left';
+
+            const startY = 90;
+            const lineHeight = 35;
+
+            serviceList.forEach((service, i) => {
+                // Bullet point
+                ctx.fillStyle = '#c084fc';
+                ctx.beginPath();
+                ctx.arc(50, startY + (i * lineHeight) - 5, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Service text
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(service, 70, startY + (i * lineHeight));
+            });
+
+            return canvas;
+        }
+
+        function generateAllCards() {
+            const container = document.getElementById('canvas-container');
+            container.innerHTML = '';
+
+            services.forEach((serviceList, index) => {
+                const canvas = createServiceCard(serviceList, index);
+                container.appendChild(canvas);
+
+                // Auto-download
+                const link = document.createElement('a');
+                link.download = `service_card_${index + 1}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
+            alert('All 4 service cards have been generated and downloaded!');
+        }
+    </script>
+</body>
+
+</html>
